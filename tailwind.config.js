@@ -5,10 +5,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        purple: '#7B3FF2',
+        purple: '#7C4DFF',
         'purple-dark': '#6430E8',
         'purple-light': '#E0D7FF',
-        background: '#F5F7FA',
+        background: '#F3F6FB',
         text: '#1A1A1A',
         'text-secondary': '#6B7280',
         link: '#4A7BF7',
