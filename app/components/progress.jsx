@@ -4,7 +4,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 const ProgressComp = () => {
   return (
-    <View className="w-48 h-48 bg-background rounded-2xl p-4 items-center justify-center">
+    <View className="w-48 h-48 md:w-1/2 md:h-64 lg:w-3/4 lg:h-72 bg-background rounded-2xl p-4 items-center justify-center">
         <View className="items-center justify-center">
             <AnimatedCircularProgress
                 size={100}

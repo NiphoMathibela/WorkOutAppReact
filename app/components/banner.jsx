@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 const Banner = () => {
   return (
-    <View className='bg-purple w-11/12 h-72 rounded-2xl p-10 flex flex-row justify-center items-center'>
+    <View className='bg-purple w-full h-72 rounded-2xl p-10 flex flex-row justify-center items-center'>
         <View className='w-2/3'>
             <Text className='text-3xl font-bold text-white'>Hi, User!</Text>
             <Text className='text-3xl font-bold text-white'>Lets get to work</Text>
