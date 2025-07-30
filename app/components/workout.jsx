@@ -2,24 +2,26 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
 
+
 const Workout = ({ name, duration, exercises = [] }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <>
-      <TouchableOpacity 
-        onPress={() => setModalVisible(true)}
-        className='w-full h-24 bg-background rounded-2xl p-6 flex flex-row justify-between items-center my-4'
-      >
-        <View className="flex-row items-center">
-          <View className="w-10 h-10 bg-[#7C4DFF] rounded-full items-center justify-center mr-3">
-            <Ionicons name="barbell" size={20} color="white" />
-          </View>
-          <Text className="text-lg font-semibold">{name || 'Workout'}</Text>
-        </View>
-        <Text className="text-gray-500">{duration || '20:00'}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            className='w-full h-24 bg-background rounded-2xl p-6 flex flex-row justify-between items-center my-4'
+        >
+            <View className="flex-row items-center">
+                <View className="w-10 h-10 bg-[#7C4DFF] rounded-full items-center justify-center mr-3">
+                    <Ionicons name="barbell" size={20} color="white" />
+                </View>
+                <Text className="text-lg font-semibold">{name || 'Workout'}</Text>
+            </View>
+            <Text className="text-gray-500">{duration || '20:00'}</Text>
+        </TouchableOpacity>
 
+        {/*Modal To View Workout*/}
       <Modal
         animationType="slide"
         transparent={true}
