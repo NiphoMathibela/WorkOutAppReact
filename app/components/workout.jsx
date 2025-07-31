@@ -21,7 +21,7 @@ const Workout = ({ name, duration, exercises = [] }) => {
             <Text className="text-gray-500">{duration || '20:00'}</Text>
         </TouchableOpacity>
 
-        {/*Modal To View Workout*/}
+        {/* Modal To View Workout */}
       <Modal
         animationType="slide"
         transparent={true}

@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRef } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import Animated from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
 const ACTION_BUTTON_WIDTH = 80;
@@ -44,6 +43,7 @@ const WorkoutSet = ({ name, duration, onEdit, onDelete }) => {
             rightThreshold={40}
             renderRightActions={renderRightActions}
             containerStyle={styles.swipeContainer}
+            className='bg-background'
         >
             <TouchableOpacity style={styles.workoutSetContent}>
                 <View style={styles.workoutSetDetails}>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         borderRadius: 16,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: '#F3F6FB',
     },
     workoutSetContent: {
         flexDirection: 'row',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
         height: '100%',
-        backgroundColor: 'white',
+        backgroundColor: '#F3F6FB',
     },
     rightActionsContainer: {
         flexDirection: 'row',
