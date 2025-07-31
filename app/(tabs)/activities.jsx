@@ -1,13 +1,13 @@
 // Activities.js
 import { useState } from 'react';
 import { Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
-// import 'react-native-get-random-values'; // Must be imported before uuid
+import 'react-native-get-random-values'; // Must be imported before uuid
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { v4 as uuidv4 } from 'uuid';
 import WorkoutSet from '../components/workoutSet';
 
 const Activities = () => {
-    const [isModalVisible, setModalVisible] = useState(false);  // New state for modal visibility
+    const [isModalVisible, setModalVisible] = useState(false);
     const [newWorkoutName, setNewWorkoutName] = useState('');
     const [workouts, setWorkouts] = useState([
         { id: '1', name: 'Upper Body', duration: '45:00' },
@@ -49,30 +49,30 @@ const Activities = () => {
                         id={workout.id}
                         name={workout.name}
                         duration={workout.duration}
-                        onDelete={handleDeleteWorkout}
+                        onDelete={() => handleDeleteWorkout(workout.id)}
                         onEdit={() => ""}
                     />
                 ))}
 
             </ScrollView>
 
-            <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={toggleModal}>
+            <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={toggleModal} statusBarTranslucent={true}>
                 <View className='flex-1 justify-center items-center'>
-                    <View className='w-4/5 p-6 rounded-lg bg-white shadow-md'>
+                    <View className='w-4/5 p-6 rounded-lg bg-white shadow'>
                         <View>
                             <Text className='text-lg font-bold mb-2'>Workout Name</Text>
                             <TextInput
-                                className='border border-gray-300 p-2 rounded-md mt-2'
+                                className='border border-gray-300 p-2 rounded-xl mt-2 h-14'
                                 placeholder="e.g. Full Body Workout"
                                 value={newWorkoutName}
                                 onChangeText={setNewWorkoutName}
                             />
                         </View>
                         <View className='flex-row justify-end mt-4'>
-                            <Pressable onPress={handleAddWorkout} className='mt-4 p-2 bg-purple rounded-md'>
+                            <Pressable onPress={handleAddWorkout} className='mt-4 p-3 bg-purple rounded-xl'>
                                 <Text className='text-white text-center font-bold'>Add Workout</Text>
                             </Pressable>
-                            <Pressable onPress={toggleModal} className='mt-4 p-2 bg-white border-purple border-2 rounded-lg ml-4'>
+                            <Pressable onPress={toggleModal} className='mt-4 p-3 bg-white border-purple border-2 rounded-xl ml-4'>
                                 <Text className='text-purple text-center font-bold'>Cancel</Text>
                             </Pressable>
                         </View>
