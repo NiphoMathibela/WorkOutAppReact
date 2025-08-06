@@ -18,7 +18,7 @@ const Workout = ({ name, duration, exercises = [] }) => {
                 </View>
                 <Text className="text-lg font-semibold">{name || 'Workout'}</Text>
             </View>
-            <Text className="text-gray-500">{duration || '20:00'}</Text>
+            {/* <Ionicons name='chevron-forward-outline' size={28} color={'lightgray'}/> */}
         </TouchableOpacity>
 
         {/* Modal To View Workout */}
