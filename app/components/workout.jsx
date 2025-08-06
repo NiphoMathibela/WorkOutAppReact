@@ -10,7 +10,7 @@ const Workout = ({ name, duration, exercises = [] }) => {
     <>
         <TouchableOpacity
             onPress={() => setModalVisible(true)}
-            className='w-full h-24 bg-background rounded-2xl p-6 flex flex-row justify-between items-center my-4'
+            className='w-full h-24 bg-background rounded-2xl p-6 flex flex-row justify-between items-center my-3'
         >
             <View className="flex-row items-center">
                 <View className="w-10 h-10 bg-[#7C4DFF] rounded-full items-center justify-center mr-3">
