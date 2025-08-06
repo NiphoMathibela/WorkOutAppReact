@@ -43,7 +43,7 @@ const _layout = () => {
                 title:"Calendar",
                 tabBarInactiveTintColor: '#6B7280',
                 tabBarActiveTintColor: '#7C4DFF',
-                headerShown: true,
+                headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => (
                     focused ? (
                         <Ionicons name="calendar" size={size} color="#7C4DFF" />
