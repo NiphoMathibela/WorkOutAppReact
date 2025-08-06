@@ -1,7 +1,6 @@
-// Activities.js
 import { useState } from 'react';
 import { Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
-import 'react-native-get-random-values'; // Must be imported before uuid
+import 'react-native-get-random-values';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { v4 as uuidv4 } from 'uuid';
 import WorkoutSet from '../components/workoutSet';
@@ -37,7 +36,7 @@ const Activities = () => {
 
     return (
         <SafeAreaView className='flex-1 items-center p-6 bg-white'>
-            <ScrollView className='w-full' showsVerticalScrollIndicator={false}> {/* Added w-full here */}
+            <ScrollView className='w-full' showsVerticalScrollIndicator={false}>
                 <View className="w-full">
                     <Text className='text-2xl font-bold text-left my-4'>Activities</Text>
                 </View>
@@ -50,7 +49,7 @@ const Activities = () => {
                         name={workout.name}
                         duration={workout.duration}
                         onDelete={() => handleDeleteWorkout(workout.id)}
-                        onEdit={() => ""}
+                        onEdit={() => {}}
                     />
                 ))}
 
