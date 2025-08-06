@@ -91,7 +91,7 @@ const CalendarScreen = () => {
   };
 
   const renderWorkoutItem = ({ item }) => (
-    <TouchableOpacity className="flex-row justify-between items-center p-4 h-20 bg-background rounded-xl mb-4">
+    <TouchableOpacity className="flex-row justify-between items-center p-6 h-24 bg-background rounded-2xl mb-4">
       <View className="flex-row items-center">
         <View className='bg-purple rounded-full p-2 mr-3'>
           <Ionicons name='bicycle-outline' size={28} color={'white'}/>
@@ -106,7 +106,7 @@ const CalendarScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white p-6">
       {/* View Mode Toggle */}
-      <View className="flex-row mb-4 bg-white rounded-lg shadow-sm overflow-hidden">
+      <View className="flex-row mb-4 bg-white rounded-2xl shadow-sm overflow-hidden">
         <TouchableOpacity 
           className={`flex-1 py-3 items-center ${viewMode === 'month' ? 'bg-indigo-100' : 'bg-white'}`}
           onPress={() => setViewMode('month')}
@@ -214,7 +214,7 @@ const CalendarScreen = () => {
           )
         ) : (
           <View className="flex-1 justify-center items-center">
-            <MaterialCommunityIcons name="calendar-outline" size={48} color={'#6430E8'} className="text-gray-300 mb-4" />
+            <Ionicons name="calendar-outline" size={48} color={'#6430E8'} className="text-gray-300 mb-4" />
             <Text className="text-gray-500">Select a date to view workouts</Text>
           </View>
         )}
