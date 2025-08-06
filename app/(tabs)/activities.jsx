@@ -57,12 +57,12 @@ const Activities = () => {
 
             <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={toggleModal} statusBarTranslucent={true}>
                 <View className='flex-1 justify-center items-center'>
-                    <View className='w-4/5 p-6 rounded-2xl bg-white shadow'>
+                    <View className='w-5/6 p-6 rounded-2xl bg-white shadow'>
                         <View>
                             <Text className='text-lg font-bold mb-2'>Workout Name</Text>
                             <TextInput
                                 className='border border-gray-300 p-4 rounded-2xl mt-2 h-14 focus:border-purple focus:outline-none'
-                                placeholder="e.g. Full Body Workout"
+                                placeholder="e.g. Full Body Workout Set"
                                 placeholderTextColor={'gray'}
                                 value={newWorkoutName}
                                 onChangeText={setNewWorkoutName}
