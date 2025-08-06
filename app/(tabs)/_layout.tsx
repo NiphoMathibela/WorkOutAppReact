@@ -59,7 +59,7 @@ const _layout = () => {
                 title:"Profile",
                 tabBarInactiveTintColor: '#6B7280',
                 tabBarActiveTintColor: '#7C4DFF',
-                headerShown: true,
+                headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => (
                     focused ? (
                         <Ionicons name="person" size={size} color="#7C4DFF" />

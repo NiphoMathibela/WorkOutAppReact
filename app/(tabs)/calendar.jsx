@@ -214,7 +214,7 @@ const CalendarScreen = () => {
           )
         ) : (
           <View className="flex-1 justify-center items-center">
-            <MaterialCommunityIcons name="calendar-blank" size={40} className="text-gray-300 mb-4" />
+            <MaterialCommunityIcons name="calendar-outline" size={48} color={'#6430E8'} className="text-gray-300 mb-4" />
             <Text className="text-gray-500">Select a date to view workouts</Text>
           </View>
         )}
