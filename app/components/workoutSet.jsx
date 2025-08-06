@@ -52,7 +52,7 @@ const WorkoutSet = ({ name, duration, onEdit, onDelete }) => {
                     </View>
                     <Text style={styles.workoutName}>{name || 'Workout'}</Text>
                 </View>
-                <Text style={styles.workoutDuration}>{duration || '20:00'}</Text>
+                <Ionicons name='chevron-forward-outline' size={28} color={'lightgray'}/>
             </TouchableOpacity>
         </Swipeable>
     );
