@@ -24,11 +24,11 @@ const Profile = () => {
         </View>
         <View className='w-full mt-5'>
           <Text className='text-xl font-semibold text-text mb-2'>Goal: No. of workouts per week</Text>
-          <TextInput className='border-gray-300 border h-16 bg-background rounded-2xl px-4 focus:border-purple focus:outline-none' placeholder='No. Of Workouts Per Week' placeholderTextColor="#9ca3af" />
+          <TextInput className='border-gray-300 border h-16 bg-background rounded-2xl px-4 focus:border-purple focus:outline-none' placeholder='eg. 5' placeholderTextColor="#9ca3af" />
         </View>
         <View className='w-full mt-5'>
-          <Text className='text-xl font-semibold text-text mb-2'>Goal: Height</Text>
-          <TextInput className='border-gray-300 border h-16 bg-background rounded-2xl px-4 focus:border-purple focus:outline-none' placeholder='No. Of Workouts Per Week' placeholderTextColor="#9ca3af" />
+          <Text className='text-xl font-semibold text-text mb-2'>Goal: Weight</Text>
+          <TextInput className='border-gray-300 border h-16 bg-background rounded-2xl px-4 focus:border-purple focus:outline-none' placeholder='eg. 70kg' placeholderTextColor="#9ca3af" />
         </View>
         <TouchableOpacity className='bg-purple w-full p-4 rounded-2xl mt-5 mb-6 justify-center items-center'>
           <Text className='text-xl font-semibold text-white'>Update</Text>
