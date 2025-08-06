@@ -91,25 +91,15 @@ const CalendarScreen = () => {
   };
 
   const renderWorkoutItem = ({ item }) => (
-    <TouchableOpacity className="flex-row justify-between items-center p-4 bg-white rounded-lg shadow-sm mb-2">
-      <View className="flex-row items-center space-x-3">
-        <MaterialCommunityIcons 
-          name={getWorkoutTypeIcon(item.type)} 
-          size={20}
-          className={item.type === 'strength' ? 'text-blue-500' : 
-                    item.type === 'cardio' ? 'text-red-500' : 'text-green-500'}
-        />
-        <Text className={`text-base ${item.completed ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+    <TouchableOpacity className="flex-row justify-between items-center p-4 h-20 bg-background rounded-xl mb-4">
+      <View className="flex-row items-center">
+        <View className='bg-purple rounded-full p-2 mr-3'>
+          <Ionicons name='bicycle-outline' size={28} color={'white'}/>
+        </View>
+        <Text className={`text-lg font-semibold`}>
           {item.name}
         </Text>
       </View>
-      <TouchableOpacity onPress={() => toggleWorkoutCompletion(item.id)}>
-        <AntDesign 
-          name={item.completed ? 'checkcircle' : 'checkcircleo'} 
-          size={20} 
-          className={item.completed ? 'text-green-500' : 'text-gray-300'} 
-        />
-      </TouchableOpacity>
     </TouchableOpacity>
   );
 
@@ -187,7 +177,7 @@ const CalendarScreen = () => {
       </View>
 
       {/* Workouts List */}
-      <View className="flex-1 bg-white p-4">
+      <View className="flex-1 bg-white mt-5">
         <View className="flex-row justify-between items-center mb-4">
           <Text className="text-lg font-semibold text-gray-800">
             {selectedDate ? new Date(selectedDate).toDateString() : 'Select a date'}
