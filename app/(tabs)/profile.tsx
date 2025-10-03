@@ -5,8 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Profile = () => {
   return (
-    <SafeAreaView className='flex-1 items-center bg-white w-full'>
-      <ScrollView className='w-11/12' showsVerticalScrollIndicator={false}>
+    <SafeAreaView className='flex-1 items-center bg-white w-full p-6'>
+      <ScrollView className='w-full' showsVerticalScrollIndicator={false}>
         <View className='text-2xl font-bold text-center text-purple mx-auto'>
           <Ionicons name='person-circle-outline' size={80} color='#6430E8' />
         </View>

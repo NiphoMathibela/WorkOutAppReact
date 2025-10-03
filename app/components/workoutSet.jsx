@@ -6,7 +6,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 const { width } = Dimensions.get('window');
 const ACTION_BUTTON_WIDTH = 80;
 
-const WorkoutSet = ({ name, duration, onEdit, onDelete }) => {
+const WorkoutSet = ({ name, duration, onEdit, onDelete, onPress }) => {
     const swipeableRef = useRef(null);
 
     const renderRightActions = (progress, dragX) => {
@@ -45,7 +45,7 @@ const WorkoutSet = ({ name, duration, onEdit, onDelete }) => {
             containerStyle={styles.swipeContainer}
             className='bg-background'
         >
-            <TouchableOpacity style={styles.workoutSetContent}>
+            <TouchableOpacity style={styles.workoutSetContent} onPress={onPress}>
                 <View style={styles.workoutSetDetails}>
                     <View style={styles.iconContainer}>
                         <Ionicons name="barbell" size={20} color="white" />

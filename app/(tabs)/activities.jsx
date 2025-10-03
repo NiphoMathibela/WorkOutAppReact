@@ -4,6 +4,7 @@ import 'react-native-get-random-values';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { v4 as uuidv4 } from 'uuid';
 import WorkoutSet from '../components/workoutSet';
+import { useRouter } from 'expo-router';
 
 const Activities = () => {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -13,6 +14,9 @@ const Activities = () => {
         { id: '2', name: 'Lower Body', duration: '30:00' },
         { id: '3', name: 'Cardio', duration: '60:00' },
     ]);
+
+    //Defining Expo Router
+    const router = useRouter();
 
     const toggleModal = () => {
         setModalVisible(prev => !prev);
@@ -50,11 +54,12 @@ const Activities = () => {
                         duration={workout.duration}
                         onDelete={() => handleDeleteWorkout(workout.id)}
                         onEdit={() => {}}
+                        onPress={() => {router.push(`/workout/${workout.id}`)}}
                     />
                 ))}
 
             </ScrollView>
-
+            {/* Adding New Workput Modal */}
             <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={toggleModal} statusBarTranslucent={true}>
                 <View className='flex-1 justify-center items-center'>
                     <View className='w-5/6 p-6 rounded-2xl bg-white shadow'>
@@ -81,7 +86,7 @@ const Activities = () => {
             </Modal>
 
             <Pressable onPress={toggleModal} className='w-full flex flex-row justify-end absolute bottom-4 right-6'>
-                <View className='w-16 h-16 bg-purple-dark rounded-full items-center justify-center animate-bounce'>
+                <View className='w-16 h-16 bg-purple-dark rounded-full items-center justify-center'>
                     <Text className='text-white text-3xl font-semibold'>+</Text>
                 </View>
             </Pressable>
