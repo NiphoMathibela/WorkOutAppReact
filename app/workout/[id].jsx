@@ -20,9 +20,9 @@ const WorkoutDetails = () => {
             <Text>{exercise.name}</Text>
         </View>
     ));
-    
+
   return (
-    <View className='flex-1 items-center justify-center bg-white'>
+    <View className='flex-1 items-center justify-center p-6 bg-white'>
       <Text>Workout ID = {id}</Text>
       {exercisesList}
     </View>
