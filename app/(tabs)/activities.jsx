@@ -1,21 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import 'react-native-get-random-values';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { v4 as uuidv4 } from 'uuid';
 import WorkoutSet from '../components/workoutSet';
 import { useRouter } from 'expo-router';
+import { ActivitiesContext } from '../contexts/activitiesContext';
 
 const Activities = () => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [newWorkoutName, setNewWorkoutName] = useState('');
-    const [workouts, setWorkouts] = useState([
-        { id: '1', name: 'Upper Body', duration: '45:00' },
-        { id: '2', name: 'Lower Body', duration: '30:00' },
-        { id: '3', name: 'Cardio', duration: '60:00' },
-    ]);
 
-    //Defining Expo Router
+    const { workOuts, setWorkOuts, loading, error } = useContext(ActivitiesContext);
+
     const router = useRouter();
 
     const toggleModal = () => {
@@ -30,23 +27,33 @@ const Activities = () => {
             return; // Or show an alert
         }
         const newWorkout = { id: uuidv4(), name: newWorkoutName, duration: '00:00' };
-        setWorkouts(currentWorkouts => [newWorkout, ...currentWorkouts]);
+        setWorkOuts(currentWorkouts => [newWorkout, ...currentWorkouts]);
         toggleModal(); // This will close modal and reset name
     };
 
     const handleDeleteWorkout = (idToDelete) => {
-        setWorkouts(currentWorkouts => currentWorkouts.filter(workout => workout.id !== idToDelete));
+        setWorkOuts(currentWorkouts => currentWorkouts.filter(workout => workout.id !== idToDelete));
     };
 
     return (
         <SafeAreaView className='flex-1 items-center p-6 bg-white'>
+            {loading && (
+                <View className="w-full items-center my-4">
+                    <Text className='text-gray-500'>Loading workouts...</Text>
+                </View>
+            )}
+            {error && (
+                <View className="w-full items-center my-2">
+                    <Text className='text-red-500'>Failed to load workouts.</Text>
+                </View>
+            )}
             <ScrollView className='w-full' showsVerticalScrollIndicator={false}>
                 <View className="w-full">
                     <Text className='text-2xl font-bold text-left my-4'>Activities</Text>
                 </View>
 
                 {/* Render your WorkoutSet components with unique keys and onDelete prop */}
-                {workouts.map(workout => (
+                {workOuts.map(workout => (
                     <WorkoutSet
                         key={workout.id}
                         id={workout.id}
