@@ -1,17 +1,18 @@
 import { useContext, useState } from 'react';
-import { Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import 'react-native-get-random-values';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { v4 as uuidv4 } from 'uuid';
 import WorkoutSet from '../components/workoutSet';
 import { useRouter } from 'expo-router';
 import { ActivitiesContext } from '../contexts/activitiesContext';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Activities = () => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [newWorkoutName, setNewWorkoutName] = useState('');
 
-    const { workOuts, setWorkOuts, loading, error } = useContext(ActivitiesContext);
+    const { workOuts, setWorkOuts, loading, error, userId, fetchWorkOuts } = useContext(ActivitiesContext);
 
     const router = useRouter();
 
@@ -22,13 +23,49 @@ const Activities = () => {
         }
     };
 
-    const handleAddWorkout = () => {
+    const handleAddWorkout = async () => {
         if (newWorkoutName.trim() === '') {
-            return; // Or show an alert
+            Alert.alert("Error: ", "Please give the workout set a name!")
+            return;
         }
-        const newWorkout = { id: uuidv4(), name: newWorkoutName, duration: '00:00' };
-        setWorkOuts(currentWorkouts => [newWorkout, ...currentWorkouts]);
-        toggleModal(); // This will close modal and reset name
+
+        //Post
+        try {
+            const response = await fetch("https://workoutservice.onrender.com/api/Workout", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: '',
+                    userId: userId,
+                    name: newWorkoutName
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text().catch(() => '');
+                console.log('Create workout failed', response.status, errorText);
+                Alert.alert('Failed', 'Could not create workout.');
+                return;
+            }
+
+            const text = await response.text();
+            const data = text ? JSON.parse(text) : null;
+            console.log('Create workout response:', data ?? text);
+
+            if (data) {
+                setWorkOuts(currentWorkouts => [data, ...currentWorkouts]);
+            }
+            // Always refresh to stay in sync with backend
+            await fetchWorkOuts();
+
+            toggleModal(); // This will close modal and reset name
+        } catch (error) {
+            console.log('Create workout error', error);
+            Alert.alert('Error', 'An error occurred while creating workout.');
+        }
     };
 
     const handleDeleteWorkout = (idToDelete) => {
@@ -38,18 +75,19 @@ const Activities = () => {
     return (
         <SafeAreaView className='flex-1 items-center p-6 bg-white'>
             {loading && (
-                <View className="w-full items-center my-4">
-                    <Text className='text-gray-500'>Loading workouts...</Text>
+                <View className="w-full items-center justify-center my-4">
+                    <MaterialCommunityIcons className='animate-spin' name='progress-helper' size={30} color={'#6430E8'}/>
                 </View>
             )}
             {error && (
-                <View className="w-full items-center my-2">
-                    <Text className='text-red-500'>Failed to load workouts.</Text>
+                <View className="w-full items-center justify-center my-2">
+                    <MaterialCommunityIcons className='animate-spin' name='progress-alert' size={30} color={'#6430E8'}/>
                 </View>
             )}
+
             <ScrollView className='w-full' showsVerticalScrollIndicator={false}>
                 <View className="w-full">
-                    <Text className='text-2xl font-bold text-left my-4'>Activities</Text>
+                    <Text className='text-2xl font-bold my-4 text-center'>Workout Sets</Text>
                 </View>
 
                 {/* Render your WorkoutSet components with unique keys and onDelete prop */}
@@ -60,8 +98,8 @@ const Activities = () => {
                         name={workout.name}
                         duration={workout.duration}
                         onDelete={() => handleDeleteWorkout(workout.id)}
-                        onEdit={() => {}}
-                        onPress={() => {router.push(`/workout/${workout.id}`)}}
+                        onEdit={() => { }}
+                        onPress={() => { router.push(`/workout/${workout.id}`) }}
                     />
                 ))}
 

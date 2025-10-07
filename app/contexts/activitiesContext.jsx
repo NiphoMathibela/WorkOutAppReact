@@ -97,7 +97,7 @@ export const ActivitiesContextProvider = ({ children }) => {
     }, [workOutId]);
  
     return (
-        <ActivitiesContext.Provider value={{ workOuts, setWorkOuts, workOutId, setWorkoutId, userId, loading, error, fetchWorkOuts, fetchExercises, exercises, setExercises, setNewExercise, newExercise, addNewExercise }}>
+        <ActivitiesContext.Provider value={{ workOuts, setWorkOuts, workOutId, setWorkoutId, userId, loading, error, fetchWorkOuts, fetchExercises, exercises, setExercises, setNewExercise, newExercise, addNewExercise, userId }}>
             {children}
         </ActivitiesContext.Provider>
     );

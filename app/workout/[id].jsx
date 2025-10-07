@@ -11,6 +11,7 @@ const WorkoutDetails = () => {
   const { id } = useLocalSearchParams();
   const { setWorkoutId, exercises, setExercises, newExercise, setNewExercise, addNewExercise } = useContext(ActivitiesContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [workoutInfo, setWorkoutInfo] = useState({});
   const headerHeight = useHeaderHeight();
 
   //Handle new exercise submit
@@ -54,11 +55,39 @@ const WorkoutDetails = () => {
     setNewExercise({ ...newExercise, [key]: text });
   }
 
+  //Fetch Workout Based On Id
+  const getWorkOutById = async () => {
+    const response = await fetch(`https://workoutservice.onrender.com/api/Workout/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type':'application/json',
+        'Accept':'application/json'
+      }
+    });
+
+    const data = await response.json();
+    setWorkoutInfo(data)
+    console.log("This is Test: ", data)
+    return data;
+  }
+
 
   useEffect(() => {
     if (id) {
       setWorkoutId(id);
+
+      //Fetch Workout Info
+      (async () => {
+        try {
+          const workouts = await getWorkOutById();
+          // setWorkoutInfo(workouts);
+        } catch (e) {
+          console.log('Failed to fetch workout info', e);
+        }
+      })();
     }
+
+
   }, [id, setWorkoutId]);
 
   //Map through fethed exercises
@@ -77,7 +106,7 @@ const WorkoutDetails = () => {
 
   return (
     <SafeAreaView className='flex-1 items-center p-6 bg-white'>
-      <Text>{id}</Text>
+      <Text className='text-2xl font-bold text-left my-4 text-black'>{workoutInfo.name}</Text>
       {exercisesList}
 
       <Modal
