@@ -54,6 +54,22 @@ const _layout = () => {
                 }}
             />
             <Tabs.Screen
+                name='search'
+                options={{
+                title:"Search",
+                tabBarInactiveTintColor: '#6B7280',
+                tabBarActiveTintColor: '#7C4DFF',
+                headerShown: false,
+                tabBarIcon: ({ focused, color, size }) => (
+                    focused ? (
+                        <Ionicons name="search" size={size} color="#7C4DFF" />
+                    ) : (
+                        <Ionicons name="search-outline" size={size} color={color} />
+                    )
+                ),
+                }}
+            />          
+            <Tabs.Screen
                 name='profile'
                 options={{
                 title:"Profile",
