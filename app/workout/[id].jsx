@@ -1,17 +1,22 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Pressable, Modal, KeyboardAvoidingView, Platform, Keyboard, ScrollView, TouchableWithoutFeedback } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { useLocalSearchParams } from 'expo-router';
-import { useContext } from 'react';
-import { ActivitiesContext } from '../contexts/activitiesContext';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FontAwesome6, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { useHeaderHeight } from '@react-navigation/elements';
+import { useLocalSearchParams } from 'expo-router';
+import { useContext, useEffect, useState } from 'react';
+import { Alert, Keyboard, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ActivitiesContext } from '../contexts/activitiesContext';
 
 const WorkoutDetails = () => {
   const { id } = useLocalSearchParams();
   const { setWorkoutId, exercises, setExercises, newExercise, setNewExercise, addNewExercise } = useContext(ActivitiesContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workoutInfo, setWorkoutInfo] = useState({});
+  const [selectedExercise, setSelectedExercise] = useState({});
+
+  //Long press edit or delete state
+  const [isEdit, setIsEdit] = useState(false);
+  const [isDelete, setIsDeleted] = useState(false);
+
   const headerHeight = useHeaderHeight();
 
   //Handle new exercise submit
@@ -41,6 +46,9 @@ const WorkoutDetails = () => {
 
       //Add new exercise to current exercise data to Front End
       setExercises(prev => [...prev, payload]);
+
+      //Show Alert
+      Alert.alert('Success', 'Exercise added successfully');
       // reset and close
       setNewExercise({ name: '', sets: '', repetitions: '', weight: '' });
       setIsModalVisible(false);
@@ -72,6 +80,43 @@ const WorkoutDetails = () => {
   }
 
 
+  //Handle long press on exercise item
+  const handleLongPress = (exercise) => {
+    setSelectedExercise(exercise);
+    console.log("Selected: ", exercise.id + " " + exercise.name);
+    setIsEdit(true);
+  }
+
+  //Delete selected exercise
+  const handleDeleteExercise = async (exerciseId) => {
+    try {
+      console.log("Deleting: ", exerciseId);
+      const response = await fetch(`https://workoutservice.onrender.com/api/Exercises/${exerciseId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+    });
+
+    if (response.ok) {
+      //Remove deleted exercise from current exercise data to Front End
+      setExercises(prev => prev.filter(exercise => exercise.id !== exerciseId));
+      setIsEdit(false);
+      //Show Alert
+      Alert.alert('Success', 'Exercise deleted successfully');
+    } else {
+      const errorText = await response.text();
+      throw new Error(`Server responded with ${response.status}: ${errorText}`);
+    }
+    } catch (err) {
+      // You may add a toast/snackbar here
+      Alert.alert('Error', 'Failed to delete exercise');
+      console.log('Failed to delete exercise', err);
+    }
+  }
+
+
   useEffect(() => {
     if (id) {
       setWorkoutId(id);
@@ -92,7 +137,7 @@ const WorkoutDetails = () => {
 
   //Map through fethed exercises
   const exercisesList = exercises.map((exercise, index) => (
-    <View key={(exercise && exercise.id) ?? index} className='flex-row w-full justify-between items-center p-4 bg-background rounded-xl mb-3'>
+    <TouchableOpacity onLongPress={() => handleLongPress(exercise)} key={(exercise && exercise.id) ?? index} className='flex-row w-full justify-between items-center p-4 bg-background rounded-xl mb-3'>
       <View>
         <View className='flex-row items-center'>
           <Ionicons name='barbell' size={28} color='#6430E8' />
@@ -101,7 +146,7 @@ const WorkoutDetails = () => {
         <Text className='text-gray-500'>{exercise.sets} sets × {exercise.repetitions} reps</Text>
       </View>
       <Text className='text-[#7C4DFF] font-semibold'>{exercise.weight} kg</Text>
-    </View>
+    </TouchableOpacity>
   ));
 
   return (
@@ -174,6 +219,26 @@ const WorkoutDetails = () => {
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+      </Modal>
+
+      {/* Edit or Delete Modal */}
+      <Modal visible={isEdit} animationType='fade' transparent={true} onRequestClose={() => setIsEdit(false)}>
+        <View className='flex-1 items-center justify-center bg-black/40'>
+          <View className='w-5/6 rounded-2xl bg-white p-6'>
+            <Text className='text-lg font-bold text-black mb-4'>Edit or Delete?</Text>
+            <View className='flex-row justify-end'>
+              <Pressable onPress={() => setIsEdit(false)} className='p-3 bg-white border-purple border-2 rounded-2xl ml-2'>
+                <Text className='text-purple text-center font-bold'>Cancel</Text>
+              </Pressable>
+              <Pressable onPress={() => setIsEdit(false)} className='p-3 bg-purple rounded-2xl ml-2 w-20'>
+                <Text className='text-white text-center font-bold'>Edit</Text>
+              </Pressable>
+              <Pressable onPress={() => handleDeleteExercise(selectedExercise?.id)} className='p-3 bg-purple rounded-2xl ml-2'>
+                <Text className='text-white text-center font-bold'>Delete</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
       </Modal>
 
       {/* Add new exercise button */}
