@@ -11,6 +11,7 @@ const WorkoutDetails = () => {
   const { setWorkoutId, exercises, setExercises, newExercise, setNewExercise, addNewExercise } = useContext(ActivitiesContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workoutInfo, setWorkoutInfo] = useState({});
+  const [modalMode, setModalMode] = useState('add'); // 'add' or 'edit'
   const [selectedExercise, setSelectedExercise] = useState({});
 
   //Long press edit or delete state
@@ -19,6 +20,12 @@ const WorkoutDetails = () => {
 
   const headerHeight = useHeaderHeight();
 
+  // Open modal for adding a new exercise
+  const openAddModal = () => {
+    setNewExercise({ name: '', sets: '', repetitions: '', weight: '' });
+    setModalMode('add');
+    setIsModalVisible(true);
+  };
   //Handle new exercise submit
   const handleAddNewExercise = async () => {
     const payload = {
@@ -43,10 +50,10 @@ const WorkoutDetails = () => {
       });
       const data = await response.json();
       console.log(data);
-
-      //Add new exercise to current exercise data to Front End
-      setExercises(prev => [...prev, payload]);
-
+  
+      // Add the exercise returned from the API (with the correct ID)
+      setExercises(prev => [...prev, data]);
+  
       //Show Alert
       Alert.alert('Success', 'Exercise added successfully');
       // reset and close
@@ -116,6 +123,58 @@ const WorkoutDetails = () => {
     }
   }
 
+  //Handle Pressing Edit
+    //You can implement a similar modal as adding new exercise but pre-filled with selected exercise data
+  const openEditModal = () => {
+    setNewExercise({
+      id: selectedExercise?.id ?? '',
+      workoutId: selectedExercise?.workoutId ?? '',
+      userId: selectedExercise?.userId ?? '',
+      name: selectedExercise?.name ?? '',
+      sets: selectedExercise?.sets !== undefined && selectedExercise?.sets !== null ? String(selectedExercise.sets) : '',
+      repetitions: selectedExercise?.repetitions !== undefined && selectedExercise?.repetitions !== null ? String(selectedExercise.repetitions) : '',
+      weight: selectedExercise?.weight !== undefined && selectedExercise?.weight !== null ? String(selectedExercise.weight) : '',
+    }); // Pre-fill form with selected exercise data
+    setModalMode('edit');
+    setIsEdit(false);
+    setIsModalVisible(true);
+  }
+
+  //Editing exercise feature
+  const handleEditeExercise = async (payload, exerciseId) => {
+    console.log("Editing: ", exerciseId);
+
+    const response = await fetch(`https://workoutservice.onrender.com/api/Exercises/${exerciseId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      // Update the exercise in the local state
+      setExercises(prevExercises =>
+        prevExercises.map(ex => (ex.id === exerciseId ? { ...ex, ...payload } : ex))
+      );
+      Alert.alert('Success', 'Exercise updated successfully.');
+      setIsModalVisible(false); // Close the modal
+    } else {
+      const errorText = await response.text();
+      throw new Error(`Server responded with ${response.status}: ${errorText}`);
+    }
+  }
+
+  // A single handler for the modal's submit button
+  const handleModalSubmit = () => {
+    if (modalMode === 'add') {
+      handleAddNewExercise();
+    } else {
+      handleEditeExercise(newExercise, selectedExercise.id);
+    }
+  };
+
 
   useEffect(() => {
     if (id) {
@@ -170,7 +229,7 @@ const WorkoutDetails = () => {
               <View className='w-5/6 max-h-[80%] rounded-2xl bg-white shadow'>
                 <ScrollView contentContainerStyle={{ padding: 24 }} keyboardShouldPersistTaps='handled'>
                   <View>
-                    <Text className='text-lg font-bold mb-2'>Exercise Name</Text>
+                    <Text className='text-lg font-bold mb-2'>{modalMode === 'add' ? 'Add New Exercise' : 'Edit Exercise'}</Text>
                     <TextInput
                       className='border border-gray-300 p-4 rounded-2xl mt-2 h-14 focus:border-purple focus:outline-none'
                       placeholder='e.g. Push-Ups'
@@ -183,7 +242,7 @@ const WorkoutDetails = () => {
                       className='border border-gray-300 p-4 rounded-2xl mt-2 h-14 focus:border-purple focus:outline-none'
                       placeholder='e.g. Sets'
                       placeholderTextColor={'gray'}
-                      value={newExercise.sets}
+                      value={newExercise?.sets != null ? String(newExercise.sets) : ''}
                       onChangeText={handleExerciseChange('sets')}
                       keyboardType='number-pad'
                     />
@@ -207,8 +266,8 @@ const WorkoutDetails = () => {
                     />
                   </View>
                   <View className='flex-row justify-end mt-4'>
-                    <Pressable onPress={handleAddNewExercise} className='mt-4 p-3 bg-purple rounded-2xl'>
-                      <Text className='text-white text-center font-bold'>Add Exercise</Text>
+                    <Pressable onPress={handleModalSubmit} className='mt-4 p-3 bg-purple rounded-2xl'>
+                      <Text className='text-white text-center font-bold'>{modalMode === 'add' ? 'Add Exercise' : 'Update Exercise'}</Text>
                     </Pressable>
                     <Pressable onPress={() => setIsModalVisible(false)} className='mt-4 p-3 bg-white border-purple border-2 rounded-2xl ml-4'>
                       <Text className='text-purple text-center font-bold'>Cancel</Text>
@@ -230,7 +289,7 @@ const WorkoutDetails = () => {
               <Pressable onPress={() => setIsEdit(false)} className='p-3 bg-white border-purple border-2 rounded-2xl ml-2'>
                 <Text className='text-purple text-center font-bold'>Cancel</Text>
               </Pressable>
-              <Pressable onPress={() => setIsEdit(false)} className='p-3 bg-purple rounded-2xl ml-2 w-20'>
+              <Pressable onPress={openEditModal} className='p-3 bg-purple rounded-2xl ml-2 w-20'>
                 <Text className='text-white text-center font-bold'>Edit</Text>
               </Pressable>
               <Pressable onPress={() => handleDeleteExercise(selectedExercise?.id)} className='p-3 bg-purple rounded-2xl ml-2'>
@@ -242,7 +301,7 @@ const WorkoutDetails = () => {
       </Modal>
 
       {/* Add new exercise button */}
-      <TouchableOpacity onPress={() => setIsModalVisible(true)} className='absolute bottom-6 right-6 w-16 h-16 bg-purple-dark rounded-full items-center justify-center'>
+      <TouchableOpacity onPress={openAddModal} className='absolute bottom-6 right-6 w-16 h-16 bg-purple-dark rounded-full items-center justify-center'>
         <Ionicons name='add' size={26} color="white" />
       </TouchableOpacity>
     </SafeAreaView>

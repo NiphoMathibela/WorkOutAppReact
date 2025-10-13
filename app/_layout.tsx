@@ -1,20 +1,23 @@
 import { Stack } from "expo-router";
-import {GestureHandlerRootView} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import 'react-native-reanimated';
 import { ActivitiesContextProvider } from "./contexts/activitiesContext";
 
 export default function RootLayout() {
-  return <GestureHandlerRootView style={{flex:1}}>
-    <ActivitiesContextProvider>
-      <Stack>
-        <Stack.Screen
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ActivitiesContextProvider>
+        <Stack>
+          <Stack.Screen
             name="(tabs)"
             options={{ headerShown: false }}
-        />
-        <Stack.Screen
+          />
+          <Stack.Screen
             name="workout/[id]"
             options={{ headerShown: false }}
-        />
-      </Stack>
-    </ActivitiesContextProvider>
-  </GestureHandlerRootView>
+          />
+        </Stack>
+      </ActivitiesContextProvider>
+    </GestureHandlerRootView>
+  );
 }
