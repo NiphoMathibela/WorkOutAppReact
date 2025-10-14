@@ -72,21 +72,15 @@ const Activities = () => {
     };
 
     return (
-        <SafeAreaView className='flex-1 items-center p-6 bg-white'>
-            {loading && (
-                <View className="w-full items-center justify-center my-4">
+        <SafeAreaView className='flex-1 bg-white'>
+            {loading ? (
+                <View className="flex-1 items-center justify-center">
                     <MaterialCommunityIcons className='animate-spin' name='progress-helper' size={30} color={'#6430E8'}/>
                 </View>
-            )}
-            {error && (
-                <View className="w-full items-center justify-center my-2">
-                    <MaterialCommunityIcons className='animate-spin' name='progress-alert' size={30} color={'#6430E8'}/>
-                </View>
-            )}
-
-            <ScrollView className='w-full' showsVerticalScrollIndicator={false}>
+            ) : (
+                <ScrollView className='w-full p-6' showsVerticalScrollIndicator={false}>
                 <View className="w-full">
-                    <Text className='text-2xl font-bold my-4 text-center'>Workout Sets</Text>
+                    <Text className='text-2xl font-bold mb-4 text-center'>Workout Sets</Text>
                 </View>
 
                 {/* Render your WorkoutSet components with unique keys and onDelete prop */}
@@ -103,6 +97,12 @@ const Activities = () => {
                 ))}
 
             </ScrollView>
+            )}
+            {error && !loading && (
+                <View className="w-full items-center justify-center my-2">
+                    <MaterialCommunityIcons className='animate-spin' name='progress-alert' size={30} color={'#6430E8'}/>
+                </View>
+            )}
             {/* Adding New Workput Modal */}
             <Modal visible={isModalVisible} animationType="slide" transparent={true} onRequestClose={toggleModal} statusBarTranslucent={true}>
                 <View className='flex-1 justify-center items-center'>
@@ -129,11 +129,11 @@ const Activities = () => {
                 </View>
             </Modal>
 
-            <Pressable onPress={toggleModal} className='w-full flex flex-row justify-end absolute bottom-4 right-6'>
+            {!loading && (<Pressable onPress={toggleModal} className='w-full flex flex-row justify-end absolute bottom-4 right-6'>
                 <View className='w-16 h-16 bg-purple-dark rounded-full items-center justify-center'>
                     <Text className='text-white text-3xl font-semibold'>+</Text>
                 </View>
-            </Pressable>
+            </Pressable>)}
         </SafeAreaView>
     );
 };
