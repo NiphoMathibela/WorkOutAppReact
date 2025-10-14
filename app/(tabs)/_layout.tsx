@@ -1,11 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
 import { Tabs } from 'expo-router'
 import React from 'react'
-import { ActivitiesContextProvider } from '../contexts/activitiesContext'
 
 const _layout = () => {
     return (
-        <ActivitiesContextProvider>
             <Tabs>
                 <Tabs.Screen
                     name='index'
@@ -55,7 +53,7 @@ const _layout = () => {
                     ),
                     }}
                 />
-                <Tabs.Screen
+                {/* <Tabs.Screen
                     name='search'
                     options={{
                     title:"Search",
@@ -70,7 +68,7 @@ const _layout = () => {
                         )
                     ),
                     }}
-                />          
+                />           */}
                 <Tabs.Screen
                     name='profile'
                     options={{
@@ -88,7 +86,6 @@ const _layout = () => {
                     }}
                 />
             </Tabs>
-        </ActivitiesContextProvider>
     )
 }
 
