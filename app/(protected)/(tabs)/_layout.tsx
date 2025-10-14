@@ -1,11 +1,12 @@
+import { AuthContext } from '@/app/contexts/authContext'
 import { Ionicons } from '@expo/vector-icons'
 import { Redirect, Tabs } from 'expo-router'
-import React from 'react'
+import React, { useContext } from 'react'
 
 const _layout = () => {
 
     //Hard coded login value for testing purposes
-    const isLoggedIn = false;
+    const {isLoggedIn} = useContext(AuthContext);
 
     if (!isLoggedIn) {
         return <Redirect href="/login" />
