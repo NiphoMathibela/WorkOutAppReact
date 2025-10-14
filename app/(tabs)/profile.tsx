@@ -34,7 +34,7 @@ const Profile = () => {
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className='flex-1'>
         <ScrollView className='w-full px-6' showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
           {/* Header */}
-        <TouchableOpacity onPress={() => Link('/components/login')}>
+        <TouchableOpacity>
         <View className='flex-row w-full mt-2'>
             <View className='w-14 h-14 left-0 rounded-full bg-purple/10 items-center justify-center shadow-sm'>
               <Ionicons name='person-circle-outline' size={44} color='#7C4DFF' />
