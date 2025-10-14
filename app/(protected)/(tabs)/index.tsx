@@ -1,8 +1,9 @@
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import Banner from '../components/banner';
-import ProgressComp from '../components/progress';
-import Workout from '../components/workout';
-import '../global.css';
+import Banner from '../../components/banner';
+import ProgressComp from '../../components/progress';
+import Workout from '../../components/workout';
+import '../../global.css';
+
 
 // Sample workout data
 const workoutData = [

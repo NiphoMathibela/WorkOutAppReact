@@ -1,12 +1,11 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
 import { Alert, Modal, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import 'react-native-get-random-values';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { v4 as uuidv4 } from 'uuid';
-import WorkoutSet from '../components/workoutSet';
-import { useRouter } from 'expo-router';
-import { ActivitiesContext } from '../contexts/activitiesContext';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import WorkoutSet from '../../components/workoutSet';
+import { ActivitiesContext } from '../../contexts/activitiesContext';
 
 const Activities = () => {
     const [isModalVisible, setModalVisible] = useState(false);

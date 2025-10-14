@@ -3,18 +3,17 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import 'react-native-reanimated';
 import { ActivitiesContextProvider } from "./contexts/activitiesContext";
 
+
 export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ActivitiesContextProvider>
-        <Stack>
+        <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen
             name="(tabs)"
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="workout/[id]"
-            options={{ headerShown: false }}
           />
         </Stack>
       </ActivitiesContextProvider>

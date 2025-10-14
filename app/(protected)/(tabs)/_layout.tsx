@@ -4,14 +4,15 @@ import React from 'react'
 
 const _layout = () => {
     return (
-            <Tabs>
+            <Tabs screenOptions={{
+                headerShown: false,
+                tabBarInactiveTintColor: '#6B7280',
+                tabBarActiveTintColor: '#7C4DFF',
+            }}>
                 <Tabs.Screen
                     name='index'
                     options={{
                     title:"Home",
-                    tabBarInactiveTintColor: '#6B7280',
-                    tabBarActiveTintColor: '#7C4DFF',
-                    headerShown: false,
                     tabBarIcon: ({ focused, color, size }) => (
                         focused ? (
                             <Ionicons name="home" size={size} color="#7C4DFF" />
@@ -25,9 +26,6 @@ const _layout = () => {
                     name='activities'
                     options={{
                     title:"Activities",
-                    tabBarInactiveTintColor: '#6B7280',
-                    tabBarActiveTintColor: '#7C4DFF',
-                    headerShown: false,
                     tabBarIcon: ({ focused, color, size }) => (
                         focused ? (
                             <Ionicons name="body" size={size} color="#7C4DFF" />
@@ -41,9 +39,6 @@ const _layout = () => {
                     name='calendar'
                     options={{
                     title:"Calendar",
-                    tabBarInactiveTintColor: '#6B7280',
-                    tabBarActiveTintColor: '#7C4DFF',
-                    headerShown: false,
                     tabBarIcon: ({ focused, color, size }) => (
                         focused ? (
                             <Ionicons name="calendar" size={size} color="#7C4DFF" />
@@ -73,9 +68,6 @@ const _layout = () => {
                     name='profile'
                     options={{
                     title:"Profile",
-                    tabBarInactiveTintColor: '#6B7280',
-                    tabBarActiveTintColor: '#7C4DFF',
-                    headerShown: false,
                     tabBarIcon: ({ focused, color, size }) => (
                         focused ? (
                             <Ionicons name="person" size={size} color="#7C4DFF" />
