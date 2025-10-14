@@ -1,8 +1,15 @@
 import { Ionicons } from '@expo/vector-icons'
-import { Tabs } from 'expo-router'
+import { Redirect, Tabs } from 'expo-router'
 import React from 'react'
 
 const _layout = () => {
+
+    //Hard coded login value for testing purposes
+    const isLoggedIn = false;
+
+    if (!isLoggedIn) {
+        return <Redirect href="/login" />
+    }
     return (
             <Tabs screenOptions={{
                 headerShown: false,
