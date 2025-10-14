@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from "./contexts/authContext";
@@ -12,6 +12,9 @@ const Login = () => {
     return (
         <SafeAreaView className='flex-1 items-center justify-center bg-white p-6'>
             <KeyboardAvoidingView className='w-full' behavior='padding'>
+                <View className='items-center mb-8'>
+                    <Image source={require("./assets/images/logo2.png")} className='w-80 mb-4 object-contain'/>
+                </View>
                 <View className='w-full shadow-purple-light rounded-2xl p-6'>
                     <Text className="text-2xl font-bold mb-2">Email</Text>
                     <TextInput placeholder='e.g. your.email@gmail.com' className='w-full h-16 border border-gray-300 focus:border-purple focus:border-2 rounded-2xl bg-background px-3' />
